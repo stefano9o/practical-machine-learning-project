@@ -21,6 +21,8 @@ testUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv'
 
 download.file(url = trainUrl,destfile = 'data/train.csv')
 download.file(url = testUrl,destfile = 'data/test.csv')
+train <- read.csv('data/train.csv', header = TRUE)
+test <- read.csv('data/test.csv', header = TRUE)
 
 train <- read.csv('data/train.csv')
 train <- read.csv('data/test.csv')
