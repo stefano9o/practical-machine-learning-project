@@ -23,6 +23,16 @@ download.file(url = trainUrl,destfile = 'data/train.csv')
 download.file(url = testUrl,destfile = 'data/test.csv')
 train <- read.csv('data/train.csv', header = TRUE)
 test <- read.csv('data/test.csv', header = TRUE)
+```{r}
+
+features.gyros <- grep(pattern = ".*gyros.*",x = names(train))
+# names(train)[features.gyros]
+features.accel <- grep(pattern = ".*accel.*",x = names(train))
+names(train)[features.accel]
+
+names(train)[-features.gyros]
+
+```
 
 train <- read.csv('data/train.csv')
 train <- read.csv('data/test.csv')
