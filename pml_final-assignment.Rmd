@@ -23,19 +23,55 @@ download.file(url = trainUrl,destfile = 'data/train.csv')
 download.file(url = testUrl,destfile = 'data/test.csv')
 train <- read.csv('data/train.csv', header = TRUE)
 test <- read.csv('data/test.csv', header = TRUE)
-```{r}
-
-features.gyros <- grep(pattern = ".*gyros.*",x = names(train))
-# names(train)[features.gyros]
-features.accel <- grep(pattern = ".*accel.*",x = names(train))
-names(train)[features.accel]
-
-names(train)[-features.gyros]
-
 ```
 
-train <- read.csv('data/train.csv')
-train <- read.csv('data/test.csv')
+# Exploratory data analysis
+
+```{r}
+features.accel <- grep(pattern = ".*accel.*",x = names(train))
+features.gyros <- grep(pattern = ".*gyros.*",x = names(train))
+
+train.sel <- train[c(features.accel,features.gyros)]
+test.sel <- test[c(features.accel,features.gyros)]
+```
+
+```{r}
+summary(train.sel)
+
+sum(is.na(train.sel$var_accel_arm))/nrow(train.sel)
+sum(is.na(train.sel$var_total_accel_belt))/nrow(train.sel)
+sum(is.na(train.sel$var_accel_dumbbell))/nrow(train.sel)
+sum(is.na(train.sel$var_accel_forearm))/nrow(train.sel)
+
+train.sel$var_accel_arm <- NULL
+train.sel$var_total_accel_belt <- NULL
+train.sel$var_accel_dumbbell <- NULL
+train.sel$var_accel_forearm <- NULL
+```
+
+
+
+```{r}
+train.cor <- cor(train.sel)
+diag(train.cor) <- 0
+which(train.cor > 0.8,arr.ind = TRUE)
+
+names(train.sel[,c(1,3,25,28,27)])
+plot(train.sel$total_accel_belt,train.sel$accel_belt_y)
+plot(train.sel$gyros_dumbbell_z,train.sel$gyros_forearm_z)
+plot(train.sel$gyros_forearm_z,train.sel$gyros_forearm_z)
+```
+
+
+```{r}
+library(caret)
+
+summary(train$user_name)
+summary(train$new_window)
+nzv <- nearZeroVar(x = train)
+summary(train[,nzv])
+
+nearZeroVar(x = train, saveMetrics = TRUE)
 ```
 
 
