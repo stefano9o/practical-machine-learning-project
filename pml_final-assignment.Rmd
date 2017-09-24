@@ -61,5 +61,30 @@ plot(train.sel$gyros_dumbbell_z,train.sel$gyros_forearm_z)
 plot(train.sel$gyros_forearm_z,train.sel$gyros_forearm_y)
 ```
 
+```{r}
+mod <- lm(total_accel_belt~accel_belt_y, data = train.sel)
+plot(mod)
+
+outliers <- which(hatvalues(mod) > 0.0004)
+train.sel <- train.sel[-outliers,]
+mod <- lm(total_accel_belt~accel_belt_y, data = train.sel)
+plot(mod)
+```
+
+```{r}
+mod <- lm(gyros_dumbbell_z~gyros_forearm_z, data = train.sel)
+plot(mod)
+
+outliers <- which(hatvalues(mod) > 0.1)
+train.sel <- train.sel[-outliers,]
+mod <- lm(total_accel_belt~accel_belt_y, data = train.sel)
+plot(mod)
+```
+
+```{r}
+mod <- lm(gyros_forearm_z~gyros_forearm_y, data = train.sel)
+plot(mod)
+```
+
 
 ## Conclusion
