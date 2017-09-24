@@ -86,5 +86,11 @@ mod <- lm(gyros_forearm_z~gyros_forearm_y, data = train.sel)
 plot(mod)
 ```
 
+```{r}
+names(train.sel[,c(1,3,25,28,27)])
+plot(train.sel$total_accel_belt,train.sel$accel_belt_y)
+plot(train.sel$gyros_dumbbell_z,train.sel$gyros_forearm_z)
+plot(train.sel$gyros_forearm_z,train.sel$gyros_forearm_y)
+```
 
 ## Conclusion
