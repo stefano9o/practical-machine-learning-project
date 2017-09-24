@@ -9,11 +9,12 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 # PML - Final assignment
 
 ## Introduction
 
-## Body
+## Exploratory data analysis
 
 ```{r}
 trainUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv'
@@ -24,8 +25,6 @@ download.file(url = testUrl,destfile = 'data/test.csv')
 train <- read.csv('data/train.csv', header = TRUE)
 test <- read.csv('data/test.csv', header = TRUE)
 ```
-
-# Exploratory data analysis
 
 ```{r}
 features.accel <- grep(pattern = ".*accel.*",x = names(train))
@@ -49,8 +48,6 @@ train.sel$var_accel_dumbbell <- NULL
 train.sel$var_accel_forearm <- NULL
 ```
 
-
-
 ```{r}
 train.cor <- cor(train.sel)
 diag(train.cor) <- 0
@@ -61,20 +58,6 @@ plot(train.sel$total_accel_belt,train.sel$accel_belt_y)
 plot(train.sel$gyros_dumbbell_z,train.sel$gyros_forearm_z)
 plot(train.sel$gyros_forearm_z,train.sel$gyros_forearm_z)
 ```
-
-
-```{r}
-library(caret)
-
-summary(train$user_name)
-summary(train$new_window)
-nzv <- nearZeroVar(x = train)
-summary(train[,nzv])
-
-nearZeroVar(x = train, saveMetrics = TRUE)
-```
-
-
 
 
 ## Conclusion
