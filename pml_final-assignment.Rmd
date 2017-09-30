@@ -47,6 +47,8 @@ train.sel$var_accel_arm <- NULL
 train.sel$var_total_accel_belt <- NULL
 train.sel$var_accel_dumbbell <- NULL
 train.sel$var_accel_forearm <- NULL
+
+summary(train.sel)
 ```
 
 ```{r}
