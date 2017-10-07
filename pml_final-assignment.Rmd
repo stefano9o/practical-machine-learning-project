@@ -96,4 +96,12 @@ plot(train.sel$gyros_dumbbell_z,train.sel$gyros_forearm_z)
 plot(train.sel$gyros_forearm_z,train.sel$gyros_forearm_y)
 ```
 
+```{r}
+library(caret)
+
+set.seed(1234)
+
+fitTre <- train(classe~., data = train.sel, method = "rpart")
+fitTre
+```
 ## Conclusion
