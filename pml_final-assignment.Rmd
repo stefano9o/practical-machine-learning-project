@@ -62,9 +62,12 @@ ncol(train.sel)
 ```
 
 ```{r}
+library(caret)
+
 train.cor <- cor(train.sel[,-1])
-diag(train.cor) <- 0
-which(train.cor > 0.8,arr.ind = TRUE)
+highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
+train.sel[,highlyCorrelated] <- NULL
+
 ```
 
 ```{r}
