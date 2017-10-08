@@ -29,10 +29,14 @@ test <- read.csv('data/test.csv', header = TRUE)
 ```{r}
 features.accel <- grep(pattern = ".*accel.*",x = names(train))
 features.gyros <- grep(pattern = ".*gyros.*",x = names(train))
+features.roll <- grep(pattern = ".*roll.*",x = names(train))
+features.pitch <- grep(pattern = ".*pitch.*",x = names(train))
+features.yam <- grep(pattern = ".*yaw.*",x = names(train))
+
 outcome <- which(names(train) == "classe")
 
-train.sel <- train[c(outcome,features.accel,features.gyros)]
-test.sel <- test[c(outcome,features.accel,features.gyros)]
+train.sel <- train[c(outcome,features.accel,features.gyros,features.roll,features.pitch,features.yam)]
+test.sel <- test[c(outcome,features.accel,features.gyros,features.roll,features.pitch,features.yam)]
 ```
 
 ```{r}
