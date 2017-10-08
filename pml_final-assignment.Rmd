@@ -47,19 +47,18 @@ train.sel[train.sel==""] <- NA
 sum(train.sel=="",na.rm = TRUE)
 ```
 ```{r}
-summary(train.sel)
+ncol(train.sel)
 
-sum(is.na(train.sel$var_accel_arm))/nrow(train.sel)
-sum(is.na(train.sel$var_total_accel_belt))/nrow(train.sel)
-sum(is.na(train.sel$var_accel_dumbbell))/nrow(train.sel)
-sum(is.na(train.sel$var_accel_forearm))/nrow(train.sel)
+naFeatureIndexes <- sapply(names(train.sel),function(featureName){
+        sum(is.na(train.sel[,featureName]))/nrow(train.sel) > .95
+})
+length(which(naFeatureIndexes))
 
-train.sel$var_accel_arm <- NULL
-train.sel$var_total_accel_belt <- NULL
-train.sel$var_accel_dumbbell <- NULL
-train.sel$var_accel_forearm <- NULL
 
-summary(train.sel)
+train.sel[,naFeatureIndexes] <- NULL
+
+ncol(train.sel)
+
 ```
 
 ```{r}
