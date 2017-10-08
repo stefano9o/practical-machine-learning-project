@@ -36,9 +36,16 @@ features.yam <- grep(pattern = ".*yaw.*",x = names(train))
 outcome <- which(names(train) == "classe")
 
 train.sel <- train[c(outcome,features.accel,features.gyros,features.roll,features.pitch,features.yam)]
-test.sel <- test[c(outcome,features.accel,features.gyros,features.roll,features.pitch,features.yam)]
+test.sel <- test[c(features.accel,features.gyros,features.roll,features.pitch,features.yam)]
+
+train.sel$classe <- as.factor(train.sel$classe)
 ```
 
+```{r}
+sum(train.sel=="",na.rm = TRUE)
+train.sel[train.sel==""] <- NA
+sum(train.sel=="",na.rm = TRUE)
+```
 ```{r}
 summary(train.sel)
 
