@@ -40,6 +40,19 @@ test.sel <- test[c(outcome,features.accel,features.gyros,features.roll,features.
 ```
 
 ```{r}
+factorIndexes <- sapply(names(train.sel),function(featureName){
+        (class(train.sel[,featureName]) == "factor") && featureName != "class"
+})
+
+length(which(factorIndexes))
+train.sel[,factorIndexes] <- sapply(train.sel[,factorIndexes],as.numeric)
+
+factorIndexes <- sapply(names(train.sel),function(featureName){
+        (class(train.sel[,featureName]) == "factor") && featureName != "class"
+})
+length(which(factorIndexes))
+```
+```{r}
 summary(train.sel)
 
 sum(is.na(train.sel$var_accel_arm))/nrow(train.sel)
