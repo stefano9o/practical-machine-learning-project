@@ -22,8 +22,8 @@ testUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv'
 
 download.file(url = trainUrl,destfile = 'data/train.csv')
 download.file(url = testUrl,destfile = 'data/test.csv')
-train <- read.csv('data/train.csv', header = TRUE)
-test <- read.csv('data/test.csv', header = TRUE)
+train <- read.csv('data/train.csv', header = TRUE, stringsAsFactors = FALSE)
+test <- read.csv('data/test.csv', header = TRUE, stringsAsFactors = FALSE)
 ```
 
 ```{r}
@@ -39,19 +39,6 @@ train.sel <- train[c(outcome,features.accel,features.gyros,features.roll,feature
 test.sel <- test[c(outcome,features.accel,features.gyros,features.roll,features.pitch,features.yam)]
 ```
 
-```{r}
-factorIndexes <- sapply(names(train.sel),function(featureName){
-        (class(train.sel[,featureName]) == "factor") && featureName != "class"
-})
-
-length(which(factorIndexes))
-train.sel[,factorIndexes] <- sapply(train.sel[,factorIndexes],as.numeric)
-
-factorIndexes <- sapply(names(train.sel),function(featureName){
-        (class(train.sel[,featureName]) == "factor") && featureName != "class"
-})
-length(which(factorIndexes))
-```
 ```{r}
 summary(train.sel)
 
