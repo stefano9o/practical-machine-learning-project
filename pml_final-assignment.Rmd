@@ -35,8 +35,8 @@ features.yam <- grep(pattern = ".*yaw.*",x = names(train))
 
 outcome <- which(names(train) == "classe")
 
-train.sel <- train[c(outcome,features.accel,features.gyros,features.roll,features.pitch,features.yam)]
-test.sel <- test[c(features.accel,features.gyros,features.roll,features.pitch,features.yam)]
+train.sel <- train[train$new_window == "yes",]
+test.sel <- test
 
 train.sel$classe <- as.factor(train.sel$classe)
 ```
