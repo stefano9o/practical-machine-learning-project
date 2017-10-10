@@ -45,7 +45,7 @@ train.sel$classe <- as.factor(train.sel$classe)
 ncol(train.sel)
 
 naFeatureIndexes <- sapply(names(train.sel),function(featureName){
-        sum(is.na(train.sel[,featureName]))/nrow(train.sel) > .95
+        sum(is.na(train.sel[,featureName]))/nrow(train.sel) > .8
 })
 length(which(naFeatureIndexes))
 
