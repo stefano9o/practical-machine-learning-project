@@ -71,8 +71,6 @@ train.sel[,ntzVars] <- NULL
 ```
 
 ```{r}
-mod <- lm(gyros_forearm_z~gyros_forearm_y, data = train.sel)
-plot(mod)
 summary(train.sel)
 outcomeIndex <- which(names(train.sel) == "classe")
 train.cor <- cor(train.sel[,-outcomeIndex])
