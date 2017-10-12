@@ -43,17 +43,12 @@ train.sel$num_window <- NULL
 
 ```{r}
 ncol(train.sel)
-
 naFeatureIndexes <- sapply(names(train.sel),function(featureName){
         sum(is.na(train.sel[,featureName]))/nrow(train.sel) > .8
 })
 length(which(naFeatureIndexes))
-
-
 train.sel[,naFeatureIndexes] <- NULL
-
 ncol(train.sel)
-
 ```
 
 
