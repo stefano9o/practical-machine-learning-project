@@ -63,7 +63,11 @@ sum(is.na(train.sel))
 ```
 
 ```{r}
+library(caret)
 
+ntzVars <- nearZeroVar(train.sel)
+summary(train.sel[,ntzVars])
+train.sel[,ntzVars] <- NULL
 ```
 
 ```{r}
