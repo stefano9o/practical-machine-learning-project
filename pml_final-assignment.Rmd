@@ -57,8 +57,6 @@ sum(is.na(train.sel))
 
 train.sel[,] <- lapply(train.sel[,],impute,median)
 
-```{r}
-
 sum(is.na(train.sel))
 ```
 
