@@ -77,11 +77,8 @@ train.sel[,highlyCorrelated] <- NULL
 ```
 
 ```{r}
-library(caret)
 
 set.seed(1234)
 
-fitTre <- train(classe~., data = train.sel, method = "rpart")
-fitTre
 ```
 ## Conclusion
