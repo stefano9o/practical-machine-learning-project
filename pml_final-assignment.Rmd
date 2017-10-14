@@ -74,6 +74,14 @@ train.sel[,highlyCorrelated] <- NULL
 ```
 
 ```{r}
+control <- trainControl(method="repeatedcv", number=10, repeats=10)
+model <- train(classe~., data=train.sel, method="rf", preProcess="scale", trControl=control)
+importance <- varImp(model, scale=FALSE)
+ord <- order(importance$importance,decreasing = TRUE)
+
+plot(importance)
+outcomeIndex <- which(names(train.sel) == "classe")
+train.sel2 <- train.sel[,c(outcomeIndex,ord[1:9])]
 ```
 
 ```{r}
