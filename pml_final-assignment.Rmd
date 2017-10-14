@@ -92,7 +92,13 @@ boruta.train <- Boruta(classe~., data = train.sel, doTrace = 2)
 print(boruta.train)
 str(boruta.train$finalDecision)
 train.sel2 <- train.sel[,boruta.train$finalDecision == "Confirmed"]
+# Random Search
+metric <- "Accuracy"
+control <- trainControl(method="repeatedcv", number=10, repeats=3, search="random")
 set.seed(1234)
 
+fit.rf <- train(classe~., data=train.sel2, method="rf", metric=metric, tuneLength=15, trControl=control)
+print(fit.rf)
+plot(fit.rf)
 ```
 ## Conclusion
