@@ -67,7 +67,6 @@ train.sel[,ntzVars] <- NULL
 ```
 
 ```{r}
-summary(train.sel)
 outcomeIndex <- which(names(train.sel) == "classe")
 train.cor <- cor(train.sel[,-outcomeIndex])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
