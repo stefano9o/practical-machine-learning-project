@@ -38,6 +38,15 @@ train.sel$new_window <- NULL
 train.sel$num_window <- NULL
 ```
 
+```{r}
+test.sel$X <- NULL
+test.sel$user_name <- NULL
+test.sel$raw_timestamp_part_1 <- NULL
+test.sel$raw_timestamp_part_2 <- NULL
+test.sel$cvtd_timestamp <- NULL
+test.sel$new_window <- NULL
+test.sel$num_window <- NULL
+```
 
 ```{r}
 rawFeatures <- grep(pattern = "^(accel|gyros|magnet)_.*_(x|y|z)$",x = names(train.sel))
