@@ -54,14 +54,6 @@ ncol(train.sel)
 ```
 
 ```{r}
-library(caret)
-
-ntzVars <- nearZeroVar(train.sel)
-summary(train.sel[,ntzVars])
-train.sel[,ntzVars] <- NULL
-```
-
-```{r}
 outcomeIndex <- which(names(train.sel) == "classe")
 train.cor <- cor(train.sel[,-outcomeIndex])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
