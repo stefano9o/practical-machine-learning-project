@@ -32,7 +32,8 @@ train.sel$classe <- as.factor(train$classe)
 rawFeatures <- grep(pattern = "^(accel|gyros|magnet)_.*_(x|y|z)$",x = names(train))
 rawFeatures <- c(rawFeatures,grep(pattern = "^(roll|pitch|yaw)_.*",x = names(train)))
 rawFeatures <- c(rawFeatures,grep(pattern = "^total_accel.*",x = names(train)))
-train.sel <- train[,rawFeatures]
+outcomeIndex <- which(names(train) == "classe")
+train.sel <- train[,c(outcomeIndex,rawFeatures)]
 ```
 
 ```{r}
