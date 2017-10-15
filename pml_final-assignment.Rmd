@@ -27,9 +27,6 @@ test <- read.csv('data/test.csv', header = TRUE, stringsAsFactors = FALSE, na.st
 ```
 
 ```{r}
-train.sel <- train[train$new_window == "yes",]
-test.sel <- test
-
 train.sel$classe <- as.factor(train.sel$classe)
 
 train.sel$X <- NULL
@@ -49,6 +46,13 @@ rawFeatures <- c(rawFeatures,grep(pattern = "^total_accel.*",x = names(train.sel
 
 train.sel[,rawFeatures] <- NULL
 test.sel[,rawFeatures] <- NULL
+```
+
+
+```{r}
+train.sel <- train[train$new_window == "yes",]
+test.sel <- test
+
 ```
 
 ```{r}
