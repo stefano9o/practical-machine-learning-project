@@ -44,16 +44,6 @@ test.sel <- test[,rawFeatures]
 ```
 
 ```{r}
-ncol(train.sel)
-naFeatureIndexes <- sapply(names(train.sel),function(featureName){
-        sum(is.na(train.sel[,featureName]))/nrow(train.sel) > .8
-})
-length(which(naFeatureIndexes))
-train.sel[,naFeatureIndexes] <- NULL
-ncol(train.sel)
-```
-
-```{r}
 outcomeIndex <- which(names(train.sel) == "classe")
 train.cor <- cor(train.sel[,-outcomeIndex])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
