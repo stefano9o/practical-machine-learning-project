@@ -43,6 +43,8 @@ rawFeatures <- c(rawFeatures,grep(pattern = "^total_accel.*",x = names(test)))
 test.sel <- test[,rawFeatures]
 ```
 
+## Exploratory data analysis
+
 ```{r}
 outcomeIndex <- which(names(train.sel) == "classe")
 train.cor <- cor(train.sel[,-outcomeIndex])
