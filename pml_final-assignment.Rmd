@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-## Exploratory data analysis
+## Cleaning data
 
 ```{r, message=TRUE, warning=TRUE, include=FALSE}
 trainUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv'
