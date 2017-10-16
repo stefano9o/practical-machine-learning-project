@@ -74,15 +74,6 @@ outcomeIndex <- which(names(train.sel) == "classe")
 train.sel2 <- train.sel[,c(outcomeIndex,ord[1:9])]
 ```
 
-```{r}
-library(Boruta)
-
-set.seed(123)
-boruta.train <- Boruta(classe~., data = train.sel, doTrace = 2)
-print(boruta.train)
-str(boruta.train$finalDecision)
-train.sel2 <- train.sel[,boruta.train$finalDecision == "Confirmed"]
-```
 
 ```{r}
 # Random Search
