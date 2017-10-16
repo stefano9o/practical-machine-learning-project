@@ -54,8 +54,18 @@ train.sel[,highlyCorrelated] <- NULL
 ```
 
 ```{r}
-control <- trainControl(method="repeatedcv", number=10, repeats=10)
-model <- train(classe~., data=train.sel, method="rf", preProcess="scale", trControl=control)
+library(parallel)
+library(doParallel)
+cluster <- makeCluster(detectCores() - 1) # convention to leave 1 core for OS
+registerDoParallel(cluster)
+
+control <- trainControl(method="cv", number=10,allowParallel = TRUE)
+model <- train(classe~., data=train.sel, method="rf", trControl=control)
+stopCluster(cluster)
+registerDoSEQ()
+```
+
+```{r}
 importance <- varImp(model, scale=FALSE)
 ord <- order(importance$importance,decreasing = TRUE)
 
