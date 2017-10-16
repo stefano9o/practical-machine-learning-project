@@ -45,6 +45,8 @@ test.sel <- test[,rawFeatures]
 ## Exploratory data analysis
 
 ```{r}
+library(caret)
+
 outcomeIndex <- which(names(train.sel) == "classe")
 train.cor <- cor(train.sel[,-outcomeIndex])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
