@@ -74,15 +74,4 @@ outcomeIndex <- which(names(train.sel) == "classe")
 train.sel2 <- train.sel[,c(outcomeIndex,ord[1:9])]
 ```
 
-
-```{r}
-# Random Search
-metric <- "Accuracy"
-control <- trainControl(method="repeatedcv", number=10, repeats=3, search="random")
-set.seed(1234)
-
-fit.rf <- train(classe~., data=train.sel2, method="rf", metric=metric, tuneLength=15, trControl=control)
-print(fit.rf)
-plot(fit.rf)
-```
 ## Conclusion
