@@ -72,4 +72,8 @@ ord <- order(importance$importance,decreasing = TRUE)
 plot(importance)
 ```
 
+```{r}
+pred <- predict(model,newdata = test.sel)
+pred
+```
 ## Conclusion
