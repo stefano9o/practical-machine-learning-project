@@ -53,7 +53,7 @@ highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
 train.sel[,highlyCorrelated] <- NULL
 ```
 
-```{r}
+```{r cache=TRUE}
 library(parallel)
 library(doParallel)
 cluster <- makeCluster(detectCores() - 1) # convention to leave 1 core for OS
