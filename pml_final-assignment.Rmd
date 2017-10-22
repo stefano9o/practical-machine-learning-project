@@ -2,7 +2,7 @@
 title: "pml_final-assignment"
 author: "Stefano Galeano"
 date: "9/14/2017"
-output: html_document
+output:
 ---
 
 
