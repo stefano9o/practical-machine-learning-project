@@ -86,6 +86,20 @@ ord <- order(importance$importance,decreasing = TRUE)
 plot(importance)
 ```
 
+```{r cache=TRUE}
+cluster <- makeCluster(detectCores() - 1) # convention to leave 1 core for OS
+registerDoParallel(cluster)
+
+control <- trainControl(method="none",allowParallel = TRUE)
+models <- lapply(2:length(ord),function(i){
+        df <- train.sel[,ord[1:i]]
+        df$classe <- train.sel$classe
+        train(classe~., data=df, method="rf", trControl=control)      
+})
+
+stopCluster(cluster)
+registerDoSEQ()
+```
 ```{r}
 pred <- predict(model,newdata = test.sel)
 pred
