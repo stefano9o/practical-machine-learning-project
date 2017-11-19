@@ -109,6 +109,15 @@ accuracies <- sapply(1:length(models), function(i){
 })
 ```
 ```{r}
+data <- data.frame(paramCount = 1:length(accuracies), acc = accuracies)
+g <- ggplot(data,mapping = aes(x=paramCount,y=acc))
+# g <- g + ylim(0.7, 1)
+g <- g + geom_linerange(aes(ymin=.7,ymax=1))
+g <- g + xlab("# of predictors")
+g <- g + ylab("Accuracy (in sample error)")
+g
+```
+```{r}
 pred <- predict(model,newdata = test.sel)
 pred
 ```
