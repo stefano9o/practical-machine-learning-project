@@ -101,6 +101,14 @@ stopCluster(cluster)
 registerDoSEQ()
 ```
 ```{r}
+accuracies <- sapply(1:length(models), function(i){
+        df <- models[[i]]$finalModel
+        cf <- confusionMatrix(data = df$pred, reference = df$y)
+        cf$overall["Accuracy"]
+
+})
+```
+```{r}
 pred <- predict(model,newdata = test.sel)
 pred
 ```
