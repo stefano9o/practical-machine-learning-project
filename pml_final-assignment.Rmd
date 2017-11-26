@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-## Cleaning data
+## Getting and cleaning data
 
 ```{r, message=TRUE, warning=TRUE, include=FALSE}
 trainUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv'
