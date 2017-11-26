@@ -41,19 +41,28 @@ test <- read.csv('data/test.csv', header = TRUE, stringsAsFactors = FALSE, na.st
 ```
 
 ```{r}
+library(caret)
+
 rawFeatures <- grep(pattern = "^(accel|gyros|magnet)_.*_(x|y|z)$",x = names(train))
 rawFeatures <- c(rawFeatures,grep(pattern = "^(roll|pitch|yaw)_.*",x = names(train)))
 rawFeatures <- c(rawFeatures,grep(pattern = "^total_accel.*",x = names(train)))
-train.sel <- train[,rawFeatures]
 
-train.sel$classe <- as.factor(train$classe)
+ds.sel <- train[,rawFeatures]
+ds.sel$classe <- as.factor(train$classe)
+```
+
+```{r}
+inTrain <- createDataPartition(ds.sel$classe,p=.75,list = FALSE)
+
+train.sel <- ds.sel[inTrain,]
+test.sel <- ds.sel[-inTrain,]
 ```
 
 ```{r}
 rawFeatures <- grep(pattern = "^(accel|gyros|magnet)_.*_(x|y|z)$",x = names(test))
 rawFeatures <- c(rawFeatures,grep(pattern = "^(roll|pitch|yaw)_.*",x = names(test)))
 rawFeatures <- c(rawFeatures,grep(pattern = "^total_accel.*",x = names(test)))
-test.sel <- test[,rawFeatures]
+quiz.sel <- test[,rawFeatures]
 ```
 
 ## Exploratory data analysis
