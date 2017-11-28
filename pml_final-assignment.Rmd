@@ -1,5 +1,5 @@
 ---
-title: "pml_final-assignment"
+title: "A machine learnig algorithm for activity recognition"
 author: "Stefano Galeano"
 date: "9/14/2017"
 output:
