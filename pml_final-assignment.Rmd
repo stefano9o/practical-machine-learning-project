@@ -20,6 +20,8 @@ The work is organized as follow: in the first section we're going to retreive th
 
 ## Getting and cleaning data
 
+The train/test datasets are downloaded, saved locally and loaded in R treating the values ```"NA","#DIV/0!",""``` as missing values:
+
 ```{r, message=TRUE, warning=TRUE, cache=TRUE}
 trainUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv'
 testUrl <- 'https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv'
@@ -31,6 +33,13 @@ train <- read.csv('data/train.csv', header = TRUE,
 test <- read.csv('data/test.csv', header = TRUE,
                  stringsAsFactors = FALSE, na.strings = c("NA","#DIV/0!",""))
 ```
+
+The dataset is composed of: 
+
+* **raw features**: recorded by four 9-dof Razor inertial measurement units (IMU), which provide three-axes acceleration, gyroscope and magnetometer data at a joint sampling rate of 45 Hz. Each IMU was monted on users' glove, armband, lumbar belt and dumbbell for a total of 36 features;
+* **extracted features**: calculated from the raw fetures using a sliding windows approch. For each temporal window, summarizing features like *mean*, *variance*, *max*, etc. have been calculated for a total of 96 derived features.
+
+In http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201 has been shown that using a subeset of the extracted features leads to good results (97% accuracy); however, in the context of this assignment we're going to use only the raw features, and this is beacuse the test dataset provided doesn't include any extracted features:
 
 ```{r}
 library(caret)
