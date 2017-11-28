@@ -98,6 +98,9 @@ g
 ```
 ```{r}
 pred <- predict(model,newdata = test.sel)
-pred
+confMatrix <- confusionMatrix(data = pred,test.sel$classe)
+print(confMatrix$overall)
+confMatrix$table
+```
 ```
 ## Conclusion
