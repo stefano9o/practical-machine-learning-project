@@ -102,5 +102,8 @@ confMatrix <- confusionMatrix(data = pred,test.sel$classe)
 print(confMatrix$overall)
 confMatrix$table
 ```
+```{r}
+predict(model,newdata = quiz.sel)
+```
 ```
 ## Conclusion
