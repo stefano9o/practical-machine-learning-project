@@ -59,8 +59,8 @@ test.sel <- ds.sel[-inTrain,]
 
 
 ```{r}
-outcomeIndex <- which(names(train.sel) == "classe")
-train.cor <- cor(train.sel[,-outcomeIndex])
+isFactor <- sapply(train.sel,is.factor)
+train.cor <- cor(train.sel[,-which(isFactor)])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
 train.sel[,highlyCorrelated] <- NULL
 ```
