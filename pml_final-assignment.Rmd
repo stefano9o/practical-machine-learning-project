@@ -12,8 +12,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# PML - Final assignment
-
 ## Introduction
 
 ## Getting and cleaning data
