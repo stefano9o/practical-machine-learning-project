@@ -1,7 +1,7 @@
 ---
 title: "A machine learnig algorithm for activity recognition"
 author: "Stefano Galeano"
-date: "9/14/2017"
+date: "28/12/2017"
 output:
   pdf_document: default
   html_document: default
