@@ -122,12 +122,21 @@ As we can see from the plot, there is a clear relation among all the three varia
 
 Returning to the plot, even if the importance decreases relatively quickly we don't want to remove any predictors. Indeed, as explained in [https://github.com/lgreski/datasciencectacontent/blob/master/markdown/pml-requiredModelAccuracy.md], in order to achieve a 20/20 rights predictions with the quiz dataset provided, we need to have a very high accuracy. 
 
+## Results
+
+We can now predict the `classe` variable using the test dataset and, since this dataset has never been used so far, we can interpret the accuracy, as a good estimator of the Out-of-sample accuracy.
+
 ```{r}
 pred <- predict(model,newdata = test.sel)
 confMatrix <- confusionMatrix(data = pred,test.sel$classe)
 print(confMatrix$overall)
 confMatrix$table
 ```
+
+In the test dataset we have a '99.23%' of accuracy, which is a relative high value and it should guarantee us a 20/20 right prediction in the quiz dataset.
+
+The prediction for the quiz dataset is:
+
 ```{r}
 predict(model,newdata = quiz.sel)
 ```
