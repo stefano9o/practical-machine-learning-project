@@ -5,18 +5,6 @@ date: "28/12/2017"
 output:
   pdf_document: default
   html_document: default
-references:
-- URL: http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201
-  author:
-  - family: Velloso
-    given: Eduardo
-  id: velloso2013
-  issued:
-    year: 2013
-  publisher: Proceedings of 4th International Conference in Cooperation with SIGCHI
-    (Augmented Human '13)
-  title: Qualitative Activity Recognition of Weight Lifting Exercises
-  type: article-journal
 ---
 
 
