@@ -14,6 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
+This work is the final asssignement for the "Practical Machine Learning" course administred by Jhon Hopkins University. The dataset used here is from http://groupware.les.inf.puc-rio.br/har, where the authors proposed a model-based approch for recognizing how well an activity it's performed. In the paper, they compared their work with a machine learning algorithm for mistake detection, demonstrating the advantages in using the model-based approch. In this work, we're going to use the data provided by the authors, in order to create a simple machine learning algorithm for human activity recognition (HAR).
+
+The work is organized as follow: in the first section we're going to retreive the data from the source and extract the interting feature; in the second section, we're going to perform some basic exploratory analysis, and in the last section we'll estimate an out-of-sample accuracy of the ML algorithm, using a fresh and never used dataset.
+
 ## Getting and cleaning data
 
 ```{r, message=TRUE, warning=TRUE, cache=TRUE}
