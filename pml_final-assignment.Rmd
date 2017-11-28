@@ -70,6 +70,7 @@ test.sel <- ds.sel[-inTrain,]
 
 ## Exploratory data analysis
 
+First of all, we are going to remove from the training dataset all the variable with a correletion higher then `0.75`: 
 
 ```{r}
 isFactor <- sapply(train.sel,is.factor)
@@ -77,6 +78,8 @@ train.cor <- cor(train.sel[,-which(isFactor)])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
 train.sel[,highlyCorrelated] <- NULL
 ```
+
+and we the remaining variables we are going to train a model. We are interested in having an accuracy as high as possible, and one of the best model for this is *random forset*. It's well known that this method leads to overfitting, so we are going to use a *10-fold* cross validation. Beacuse of the cross-validation and the high number of observations and predictors, we're going to enable the multi-core computation:
 
 ```{r cache=TRUE}
 library(parallel)
@@ -90,6 +93,10 @@ stopCluster(cluster)
 registerDoSEQ()
 ```
 
+The most important parameters to be tuned for the `rf` method are: the number of tree to grow (`ntree`), and the number of predictors to be taken into account as potential splitting variable at each split (`mtry`). by deafult, the `train` function keeps fixed tthe first parameter (`ntree=500`), while it varies the second; in our case it assuemes three diferent values (`mtry=2`,`mtry=17`, and `mtry=34`). From the results above, it turns out that `mtry = 2` produce the best results.
+
+Using the model just trained, we're going to calculate the variable importances:
+
 ```{r}
 importance <- varImp(model, scale=FALSE)
 ord <- order(importance$importance,decreasing = TRUE)
@@ -97,6 +104,7 @@ ord <- order(importance$importance,decreasing = TRUE)
 plot(importance)
 ```
 
+From the plot it turns out that `yaw_belt` is the most important variable; this variable conveys the change in direction of the sensor belt (see here for more information about yaw rotation https://en.wikipedia.org/wiki/Yaw_rotation). This sounds a little bit strange since the subjects weren't supposed to do any rotation with the belvis. In order to understand this behaviour, we're going to plot the temporal variable `raw_timestamp_part_1` against the `yaw_belt` and `username` variable:
 
 ```{r}
 km <- kmeans(train$raw_timestamp_part_1,centers = 20)
@@ -109,6 +117,11 @@ g <- g + xlab("time")
 g <- g + ylab("yaw belt")
 g
 ```
+
+As we can see from the plot, there is a clear relation among all the three variable, and in particular the `raw_belt` variable highly depends on the session in which the exercise was made. We can also note how the variable in each session, doesn't have a big variance as the whole variable has. In this context the `raw_belt` can be interpeted as the initial orentation of the subject.
+
+Returning to the plot, even if the importance decreases relatively quickly we don't want to remove any predictors. Indeed, as explained in [https://github.com/lgreski/datasciencectacontent/blob/master/markdown/pml-requiredModelAccuracy.md], in order to achieve a 20/20 rights predictions with the quiz dataset provided, we need to have a very high accuracy. 
+
 ```{r}
 pred <- predict(model,newdata = test.sel)
 confMatrix <- confusionMatrix(data = pred,test.sel$classe)
