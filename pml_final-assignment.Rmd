@@ -84,31 +84,9 @@ ord <- order(importance$importance,decreasing = TRUE)
 plot(importance)
 ```
 
-```{r cache=TRUE}
-cluster <- makeCluster(detectCores() - 1) # convention to leave 1 core for OS
-registerDoParallel(cluster)
 
-control <- trainControl(method="none",allowParallel = TRUE)
-models <- lapply(2:length(ord),function(i){
-        df <- train.sel[,ord[1:i]]
-        df$classe <- train.sel$classe
-        train(classe~., data=df, method="rf", trControl=control)      
-})
-
-stopCluster(cluster)
-registerDoSEQ()
-```
 ```{r}
-accuracies <- sapply(1:length(models), function(i){
-        df <- models[[i]]$finalModel
-        cf <- confusionMatrix(data = df$pred, reference = df$y)
-        cf$overall["Accuracy"]
 
-})
-```
-```{r}
-data <- data.frame(paramCount = 1:length(accuracies), acc = accuracies)
-g <- ggplot(data,mapping = aes(x=paramCount,y=acc))
 # g <- g + ylim(0.7, 1)
 g <- g + geom_linerange(aes(ymin=.7,ymax=1))
 g <- g + xlab("# of predictors")
