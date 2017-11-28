@@ -86,11 +86,14 @@ plot(importance)
 
 
 ```{r}
+km <- kmeans(train$raw_timestamp_part_1,centers = 20)
 
+df <- data.frame(time = as.factor(km$cluster), yaw_belt = train$yaw_belt, subject = as.factor(train$user_name))
+g <- ggplot(df,mapping = aes(x=time,y=yaw_belt,color=subject))
 # g <- g + ylim(0.7, 1)
-g <- g + geom_linerange(aes(ymin=.7,ymax=1))
-g <- g + xlab("# of predictors")
-g <- g + ylab("Accuracy (in sample error)")
+g <- g + geom_jitter()
+g <- g + xlab("time")
+g <- g + ylab("yaw belt")
 g
 ```
 ```{r}
