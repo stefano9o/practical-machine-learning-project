@@ -138,7 +138,8 @@ In the test dataset we have a '99.23%' of accuracy, which is a relative high val
 The prediction for the quiz dataset is:
 
 ```{r}
-predict(model,newdata = quiz.sel)
+pred <- predict(model,newdata = quiz.sel)
+pred
 ```
 ```
 ## Conclusion
