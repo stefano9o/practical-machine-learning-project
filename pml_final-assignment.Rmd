@@ -14,9 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This work is the final asssignement for the "Practical Machine Learning" course administred by Jhon Hopkins University. The material provided for the assignment is from http://groupware.les.inf.puc-rio.br/har, where the authors proposed a model-based approch for recognizing how well an activity it's performed (QAR). In the paper, they compared their work with a machine learning algorithm for mistake detection, demonstrating the advantages in using the model-based approch. In this work, we're going to use the data provided by the authors, in order to create a simple machine learning algorithm for human activity recognition (HAR).
+This work is the final assignment for the "Practical Machine Learning" course administered by Jhon Hopkins University. The material provided for the assignment came from http://groupware.les.inf.puc-rio.br/har, where the authors proposed a model-based approach for recognizing how well an activity it's performed (QAR). In the paper, they compared their work with a machine learning algorithm for mistake detection, demonstrating the advantages in using the model-based approach. In this work, we're going to use the data provided by the authors, in order to create a simple machine learning algorithm for human activity recognition (HAR).
 
-The work is organized as follow: in the first section we're going to retreive the data from the source and extract the interting features; in the second section, we're going to perform some basic exploratory analysis, and in the last section we'll estimate an out-of-sample accuracy of the ML algorithm, using a fresh and never used dataset.
+The work is organized as follow: in the first section, we're going to retrieve the data from the source and extract the interesting features. In the second section, we're going to perform some basic exploratory analysis, and in the last section, we'll estimate an out-of-sample accuracy of the ML algorithm, using a fresh and never used dataset.
 
 ## Getting and cleaning data
 
@@ -36,10 +36,10 @@ test <- read.csv('data/test.csv', header = TRUE,
 
 The dataset is composed of: 
 
-* **raw features**: recorded by four 9-dof Razor inertial measurement units (IMU), which provide three-axes acceleration, gyroscope and magnetometer data at a joint sampling rate of 45 Hz. Each IMU was monted on users' glove, armband, lumbar belt and dumbbell for a total of 36 features;
-* **extracted features**: calculated from the raw fetures using a sliding windows approch. For each temporal window, summarizing features like *mean*, *variance*, *max*, etc. have been calculated for a total of 96 derived features.
+* **raw features**: recorded by four 9-dof Razor inertial measurement units (IMU), which provide three-axis acceleration, gyroscope and magnetometer data at a joint sampling rate of 45 Hz. Each IMU was mounted on users' glove, armband, lumbar belt and dumbbell for a total of 36 features;
+* **extracted features**: calculated from the raw features using a sliding windows approach. For each temporal window, summarizing features like *mean*, *variance*, *max*, etc. have been calculated for a total of 96 derived features.
 
-In http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201 has been shown that using a subeset of the extracted features leads to good results (97% accuracy); however, in the context of this assignment we're going to use only the raw features, and this is beacuse the test dataset provided doesn't include any extracted features:
+In http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201 has been shown that using a subset of the extracted features leads to good results (97% accuracy); however, in the context of this assignment, we're going to use only the raw features, and this is because the test dataset provided for the final quiz, doesn't include any extracted features:
 
 ```{r}
 library(caret)
@@ -59,7 +59,7 @@ rawFeatures <- c(rawFeatures,grep(pattern = "^total_accel.*",x = names(test)))
 quiz.sel <- test[,rawFeatures]
 ```
 
-The data are then splitted in train and test set:
+The data are then split into train and test set:
 
 ```{r}
 inTrain <- createDataPartition(ds.sel$classe,p=.75,list = FALSE)
@@ -79,7 +79,7 @@ highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
 train.sel[,highlyCorrelated] <- NULL
 ```
 
-and we the remaining variables we are going to train a model. We are interested in having an accuracy as high as possible, and one of the best model for this is *random forset*. It's well known that this method leads to overfitting, so we are going to use a *10-fold* cross validation. Beacuse of the cross-validation and the high number of observations and predictors, we're going to enable the multi-core computation:
+and we the remaining variables we are going to train a model. We are interested in having an accuracy as high as possible, and one of the best models for this is *random forset*. It's well known that this method leads to overfitting, so we are going to use a *10-fold* cross-validation. Because of the cross-validation and the high number of observations and predictors, we're going to enable the multi-core computation:
 
 ```{r cache=TRUE}
 library(parallel)
@@ -93,7 +93,7 @@ stopCluster(cluster)
 registerDoSEQ()
 ```
 
-The most important parameters to be tuned for the `rf` method are: the number of tree to grow (`ntree`), and the number of predictors to be taken into account as potential splitting variable at each split (`mtry`). By deafult, the `train` function keeps fixed the first parameter (`ntree=500`), while it varies the second; in our case it assuemes three diferent values (`mtry=2`,`mtry=17`, and `mtry=34`). From the results above, it turns out that `mtry = 2` produces the best results.
+The most important parameters to be tuned for the `rf` method are: the number of the tree to grow (`ntree`), and the number of predictors to be taken into account as potential splitting variable at each split (`mtry`). By default, the `train` function keeps fixed the first parameter (`ntree=500`), while it varies the second; in our case, it assumes three different values (`mtry=2`,`mtry=17`, and `mtry=34`). From the results above, it turns out that `mtry = 2` produces the best results.
 
 Using the model just trained, we're going to calculate the variable importances:
 
@@ -104,7 +104,7 @@ ord <- order(importance$importance,decreasing = TRUE)
 plot(importance)
 ```
 
-From the plot it turns out that `yaw_belt` is the most important variable; this variable conveys the change in direction of the sensor belt (see here for more information about yaw rotation https://en.wikipedia.org/wiki/Yaw_rotation). This sounds a little bit strange since the subjects weren't supposed to do any rotation with the belvis. In order to understand this behaviour, we're going to plot the temporal variable `raw_timestamp_part_1` against the `yaw_belt` and `username` variable:
+From the plot it turns out that `yaw_belt` is the most important variable; this variable conveys the change in direction of the sensor belt (see here for more information about yaw rotation https://en.wikipedia.org/wiki/Yaw_rotation). This sounds a little bit strange since the subjects weren't supposed to do any rotation with the pelvis. In order to understand this behaviour, we're going to plot the temporal variable `raw_timestamp_part_1` against the `yaw_belt` and `username` variable:
 
 ```{r}
 km <- kmeans(train$raw_timestamp_part_1,centers = 20)
@@ -118,7 +118,7 @@ g <- g + ylab("yaw belt")
 g
 ```
 
-As we can see from the plot, there is a clear relation among all the three variables, and in particular the `raw_belt` variable highly depends on the session in which the exercise was made. We can also note how the variable in each session, doesn't have a big variance as the whole variable has. In this context the `raw_belt` can be interpeted as the initial orentation of the subject.
+As we can see from the plot, there is a clear relationship among all the three variables, and in particular, the `raw_belt` variable highly depends on the session in which the exercise was made. We can also note how the variable in each session, doesn't have a big variance as the whole variable has. In this context, the `raw_belt` can be interpreted as the initial orientation of the subject.
 
 Returning to the plot, even if the importance decreases relatively quickly we don't want to remove any predictors. Indeed, as explained in [https://github.com/lgreski/datasciencectacontent/blob/master/markdown/pml-requiredModelAccuracy.md], in order to achieve a 20/20 rights predictions with the quiz dataset provided, we need to have a very high accuracy. 
 
@@ -133,7 +133,7 @@ print(confMatrix$overall)
 confMatrix$table
 ```
 
-In the test dataset we have a '99.23%' of accuracy, which is a relative high value and it should guarantee us a 20/20 right prediction in the quiz dataset.
+In the test dataset, we have a '99.23%' of accuracy, which is a relatively high value and it should guarantee us a 20/20 right prediction in the quiz dataset.
 
 The prediction for the quiz dataset is:
 
