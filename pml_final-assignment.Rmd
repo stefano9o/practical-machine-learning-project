@@ -38,6 +38,7 @@ The dataset is composed of:
 
 * **raw features**: recorded by four 9-dof Razor inertial measurement units (IMU), which provide three-axis acceleration, gyroscope and magnetometer data at a joint sampling rate of 45 Hz. Each IMU was mounted on users' glove, armband, lumbar belt and dumbbell for a total of 36 features;
 * **extracted features**: calculated from the raw features using a sliding windows approach. For each temporal window, summarizing features like *mean*, *variance*, *max*, etc. have been calculated for a total of 96 derived features.
+* **classe**: represent the type of activity performed at that time. Class A corresponds to the specified execution of the exercise (Unilateral Dumbbell Biceps Curl), while the other 4 classes correspond to common mistakes. 
 
 In http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201 has been shown that using a subset of the extracted features leads to good results (97% accuracy); however, in the context of this assignment, we're going to use only the raw features, and this is because the test dataset provided for the final quiz, doesn't include any extracted features:
 
