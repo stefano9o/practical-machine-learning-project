@@ -43,7 +43,7 @@ The dataset is composed of:
 In http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201 has been shown that using a subset of the extracted features leads to good results (97% accuracy); however, in the context of this assignment, we're going to use only the raw features, and this is because the test dataset provided for the final quiz, doesn't include any extracted features:
 
 ```{r}
-library(caret)
+library(caret, quietly = TRUE)
 
 rawFeatures <- grep(pattern = "^(accel|gyros|magnet)_.*_(x|y|z)$",x = names(train))
 rawFeatures <- c(rawFeatures,grep(pattern = "^(roll|pitch|yaw)_.*",x = names(train)))
