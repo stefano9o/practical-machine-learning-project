@@ -79,6 +79,7 @@ isFactor <- sapply(train.sel,is.factor)
 train.cor <- cor(train.sel[,-which(isFactor)])
 highlyCorrelated <- findCorrelation(train.cor, cutoff=0.75, names = TRUE)
 train.sel[,highlyCorrelated] <- NULL
+test.sel[,highlyCorrelated] <- NULL
 ```
 
 and we the remaining variables we are going to train a model. We are interested in having an accuracy as high as possible, and one of the best models for this is *random forset*. It's well known that this method leads to overfitting, so we are going to use a *10-fold* cross-validation. Because of the cross-validation and the high number of observations and predictors, we're going to enable the multi-core computation:
