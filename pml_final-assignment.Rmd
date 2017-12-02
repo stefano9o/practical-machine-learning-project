@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This work is the final assignment for the "Practical Machine Learning" course administered by Jhon Hopkins University. The material provided for the assignment came from http://groupware.les.inf.puc-rio.br/har, where the authors proposed a model-based approach for recognizing how well an activity it's performed (QAR). In the paper, they compared their work with a machine learning algorithm for mistake detection, demonstrating the advantages in using the model-based approach. In this work, we're going to use the data provided by the authors, in order to create a simple machine learning algorithm for human activity recognition (HAR).
 
-The work is organized as follow: in the first section, we're going to retrieve the data from the source and extract the interesting features. In the second section, we're going to perform some basic exploratory analysis, and in the last section, we'll estimate an out-of-sample accuracy of the ML algorithm, using a fresh and never used dataset.
+The work is organized as follow: in the first section, we're going to retrieve the data from the source and extract the interesting features. In the second section, we're going to perform some basic exploratory analysis, and in the last section, we'll estimate an out-of-sample error of the ML algorithm, using a fresh and never used dataset.
 
 ## Getting and cleaning data
 
@@ -38,7 +38,7 @@ The dataset is composed of:
 
 * **raw features**: recorded by four 9-dof Razor inertial measurement units (IMU), which provide three-axis acceleration, gyroscope and magnetometer data at a joint sampling rate of 45 Hz. Each IMU was mounted on users' glove, armband, lumbar belt and dumbbell for a total of 36 features;
 * **extracted features**: calculated from the raw features using a sliding windows approach. For each temporal window, summarizing features like *mean*, *variance*, *max*, etc. have been calculated for a total of 96 derived features.
-* **classe**: represent the type of activity performed at that time. Class A corresponds to the specified execution of the exercise (Unilateral Dumbbell Biceps Curl), while the other 4 classes correspond to common mistakes. 
+* **classe**: represent the type of activity performed. Class A corresponds to the specified execution of the exercise (Unilateral Dumbbell Biceps Curl), while the other 4 classes correspond to common mistakes. 
 
 In http://groupware.les.inf.puc-rio.br/work.jsf?p1=11201 has been shown that using a subset of the extracted features leads to good results (97% accuracy); however, in the context of this assignment, we're going to use only the raw features, and this is because the test dataset provided for the final quiz, doesn't include any extracted features:
 
@@ -125,7 +125,7 @@ Returning to the plot, even if the importance decreases relatively quickly we do
 
 ## Results
 
-We can now predict the `classe` variable using the test dataset and, since this dataset has never been used so far, we can interpret the accuracy, as a good estimator of the Out-of-sample accuracy.
+We can now predict the `classe` variable using the test dataset and see where our model behaves well:
 
 ```{r}
 pred <- predict(model,newdata = test.sel)
@@ -135,12 +135,11 @@ confMatrix$table
 ```
 
 In the test dataset, we have a '99.23%' of accuracy, which is a relatively high value and it should guarantee us a 20/20 right prediction in the quiz dataset.
+Since the test dataset has never been used so far, we can interpret the error, as a good estimator of the Out-of-sample error.
 
-The prediction for the quiz dataset is:
+Finally we can predict the classe variable for the quiz dataset:
 
 ```{r}
 pred <- predict(model,newdata = quiz.sel)
 pred
 ```
-```
-## Conclusion
