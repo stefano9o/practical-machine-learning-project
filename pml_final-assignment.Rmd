@@ -108,11 +108,10 @@ The most important parameters to be tuned for the `rf` method are: the number of
 
 Using the model just trained, we're going to calculate the variable importances:
 
-```{r}
-importance <- varImp(model, scale=FALSE)
-ord <- order(importance$importance,decreasing = TRUE)
+```{r, fig.height=3}
+library(randomForest, quietly = TRUE)
 
-plot(importance)
+varImpPlot(model$finalModel,main = "Importance variables", type = 2, cex=0.5)
 ```
 
 From the plot it turns out that `yaw_belt` is the most important variable; this variable conveys the change in direction of the sensor belt (see here for more information about yaw rotation https://en.wikipedia.org/wiki/Yaw_rotation). This sounds a little bit strange since the subjects weren't supposed to do any rotation with the pelvis. In order to understand this behaviour, we're going to plot the temporal variable `raw_timestamp_part_1` against the `yaw_belt` and `username` variable:
