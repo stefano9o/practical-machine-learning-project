@@ -100,6 +100,8 @@ control <- trainControl(method="cv", number=10,allowParallel = TRUE,seeds = seed
 model <- train(classe~., data=train.sel, method="rf", trControl=control)
 stopCluster(cluster)
 registerDoSEQ()
+
+model
 ```
 
 The most important parameters to be tuned for the `rf` method are: the number of the tree to grow (`ntree`), and the number of predictors to be taken into account as potential splitting variable at each split (`mtry`). By default, the `train` function keeps fixed the first parameter (`ntree=500`), while it varies the second; in our case, it assumes three different values (`mtry=2`,`mtry=17`, and `mtry=34`). From the results above, it turns out that `mtry = 2` produces the best results.
