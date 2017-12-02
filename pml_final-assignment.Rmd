@@ -63,6 +63,7 @@ quiz.sel <- test[,rawFeatures]
 The data are then split into train and test set:
 
 ```{r}
+set.seed(2015)
 inTrain <- createDataPartition(ds.sel$classe,p=.75,list = FALSE)
 
 train.sel <- ds.sel[inTrain,]
@@ -85,10 +86,17 @@ and we the remaining variables we are going to train a model. We are interested 
 ```{r cache=TRUE}
 library(parallel)
 library(doParallel)
+
+set.seed(1234)
+seeds <- vector(mode = "list", length = 11) #length is = (n_repeats*nresampling)+1
+for(i in 1:10) #(3 is the number of tuning parameter, mtry for rf)
+  seeds[[i]] <- sample.int(n=1000, 3) # here equal to 3 (mtry=2,mtry=17, and mtry=34)
+seeds[[11]] <- sample.int(1000, 1) # For the last model:
+
 cluster <- makeCluster(detectCores() - 1) # convention to leave 1 core for OS
 registerDoParallel(cluster)
 
-control <- trainControl(method="cv", number=10,allowParallel = TRUE)
+control <- trainControl(method="cv", number=10,allowParallel = TRUE,seeds = seeds)
 model <- train(classe~., data=train.sel, method="rf", trControl=control)
 stopCluster(cluster)
 registerDoSEQ()
